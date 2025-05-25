@@ -227,25 +227,20 @@ Tiga metrik utama yang digunakan untuk mengevaluasi performa model regresi adala
 ### 1. Mean Absolute Error (MAE)
 - Mengukur rata-rata kesalahan absolut antara nilai aktual dan prediksi.
 - Rumus:
-  \[
-  \text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
-  \]
+![alt text](image-14.png)
 - Semakin kecil nilainya, semakin baik model memprediksi.
 
 ### 2. Root Mean Squared Error (RMSE)
 - Mengukur akar dari rata-rata kuadrat kesalahan.
 - Lebih sensitif terhadap outlier dibanding MAE.
 - Rumus:
-  \[
-  \text{RMSE} = \sqrt{ \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 }
-  \]
+  ![alt text](image-13.png)
 
 ### 3. R-squared (R²)
 - Menjelaskan seberapa besar variansi dari target bisa dijelaskan oleh fitur.
 - Rumus:
-  \[
-  R^2 = 1 - \frac{ \sum (y_i - \hat{y}_i)^2 }{ \sum (y_i - \bar{y})^2 }
-  \]
+ ![alt text](image-15.png)
+ 
 - Nilai mendekati 1 menunjukkan model sangat baik.
 
 ---
