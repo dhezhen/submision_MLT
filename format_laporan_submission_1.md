@@ -124,13 +124,31 @@ Tidak ada perbedaan signifikan antara nilai ujian laki-laki dan perempuan.
 
 #### 4. Jam Belajar vs Nilai Ujian
 Terdapat tren **positif** yang menunjukkan bahwa semakin banyak jam belajar per hari, semakin tinggi nilai ujian.
+![alt text](image-2.png)
 
 #### 5. Kehadiran vs Nilai Ujian
 Korelasi positif terlihat antara tingkat kehadiran dan nilai ujian, menunjukkan bahwa siswa yang lebih sering hadir cenderung mendapat nilai lebih baik.
+![alt text](image-3.png)
 
 #### 6. Pendidikan Orang Tua vs Nilai Ujian
-
 Siswa dengan orang tua berpendidikan tinggi (misalnya S1/S2) cenderung memiliki nilai ujian yang lebih tinggi, meskipun terdapat variasi.
+![alt text](image-4.png)
+
+#### 6. Distribusi Fitur Numerik
+- Berikut distibusi Fitur numerik pada data frame ini 
+![alt text](image-5.png)
+
+
+#### 6. Distribusi Fitur Kategorikal
+Berikut distribusi fitur kategorikal
+![alt text](image-6.png)
+
+
+#### 7 Heatmap Korelasi antar fitur 
+![alt text](image-7.png)
+terlihat diatas, bahwa korelasi paling tinggi ada di studi time perharinya
+
+
 ### Kesimpulan Awal
 
 Beberapa variabel penting yang mungkin berpengaruh signifikan terhadap nilai ujian:
@@ -145,11 +163,14 @@ Beberapa variabel penting yang mungkin berpengaruh signifikan terhadap nilai uji
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
 ### Memahami Struktur Data
   - Menggunakan fungsi df.info() | df.describe() untuk melihat ringkasan data dalam bentuk statistik dan distribusi awal
+  ![alt text](image-8.png)
+  ![alt text](image-9.png)
+  ![alt text](image-10.png)
 
 ### Menangani Missing Values
 - Kolom parental_education_level memiliki 91 nilai kosong.
 - Teknik yang diterapkan: imputasi dengan modus (mode) 
-
+![alt text](image-11.png)
 ### Menghapus Kolom yang Tidak Digunakan
 - Kolom student_id dihapus karena tidak relevan dalam prediksi.
 
@@ -237,6 +258,8 @@ Setelah dilakukan pelatihan dan evaluasi menggunakan **Linear Regression** dan *
 |------------------------|--------|--------|----------|
 | Linear Regression      | 4.19   | 5.15   | 0.897    |
 | Random Forest Regressor| 4.97   | 6.21   | 0.850    |
+
+![alt text](image-12.png)
 
 ---
 
