@@ -75,11 +75,11 @@ untuk memperkirakan nilai ujian siswa berdasarkan fitur-fitur yang tersedia.
 - Menginterpretasikan hasil model, mengidentifikasi fitur yang paling berpengaruh terhadap performa akademik, serta menyajikan visualisasi hasil dan rekomendasi berbasis data untuk perbaikan kebiasaan belajar siswa.
 
 ## Data Understanding
-Data student Habits vs Academic Performance diambil dari platform kaggle (<https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance/data>) dimana dataset ini  berisi 1000 baris baris data unik dengan 16 kolom didalamnya. Dataset ini merupakan simulasi yang dirancang untuk mengeksplorasi keterkaitan antara kebiasaan gaya hidup dan kinerja akademik siswa. dataset ini dapat dijadikan bahan latihan dalam mengekplorasi pengaruh aktifitas siswa terhadap keberhasilan akademik disekolah
+Data student Habits vs Academic Performance diambil dari platform kaggle (<https://www.kaggle.com/datasets/jayaantanaath/student-habits-vs-academic-performance/data>) dimana dataset ini  berisi 1000 baris baris data unik dengan 16 kolom didalamnya. Dataset ini merupakan simulasi yang dirancang untuk mengeksplorasi keterkaitan antara kebiasaan gaya hidup dan kinerja akademik siswa. dataset ini dapat dijadikan bahan latihan dalam mengekplorasi pengaruh aktifitas siswa terhadap keberhasilan akademik disekolah. 
+Selanjutnya pada bagian gambar dibawah dapat kita lihat informasi dataset yang akan kita olah: 
+![image](https://github.com/user-attachments/assets/05961cb5-4ff1-49cd-af35-24783722aa91)
 
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
-
-### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
+### Berikut Desrripsi kolom/fitur dari dataset tersebut:
 | **Kolom**                       | **Deskripsi**                                                                                                                               |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `student_id` | ID unik untuk masing-masing siswa. Tidak bersifat prediktif, hanya untuk identifikasi.                                                                         |
@@ -98,6 +98,13 @@ Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:
 | `mental_health_rating`          | Penilaian subjektif siswa terhadap kondisi mental mereka, biasanya dalam skala numerik (misal 1–10).                                        |
 | `extracurricular_participation` | Partisipasi dalam kegiatan ekstrakurikuler (misalnya: "Yes"/"No"). Bisa berdampak positif atau negatif tergantung konteks.                  |
 | `exam_score`                    | Skor ujian akhir siswa. Ini adalah **target variabel utama** untuk prediksi performa akademik.                                              |
+
+- Cek data  yang memiliki nilai kosong
+  Hasil pengecekan dari dataset tersebut terdapat satu fitur yang memiliki 91 _missing value_  yaitu fitur _parental_edication_level_
+   ![image](https://github.com/user-attachments/assets/952b9170-70ae-42be-9e7d-259baa753242)
+- Selanjutnya kita juga harus mengecek data duplikat pada dataset yang akan kita olah, pada kasus ini setelah dicek tidak terdapat data duplikat satupun, berikut hasil penegecekannya:
+  ![image](https://github.com/user-attachments/assets/df296e15-67d6-4e1c-8de3-fe2f1ada4dd3)
+
 
 ***Rubrik/Kriteria Tambahan (Opsional):***
 
@@ -119,33 +126,39 @@ Heatmap menunjukkan:
   - `netflix_hours`
 
 #### 3. Gender vs Exam Score
-![alt text](image-1.png)
+![image](https://github.com/user-attachments/assets/0b258eed-db89-40b2-8b4c-bfc15b20e986)
+
 Tidak ada perbedaan signifikan antara nilai ujian laki-laki dan perempuan.
 
 #### 4. Jam Belajar vs Nilai Ujian
+![image](https://github.com/user-attachments/assets/e5291c8f-c6b4-4b02-8947-756c1f5dd025)
+
 Terdapat tren **positif** yang menunjukkan bahwa semakin banyak jam belajar per hari, semakin tinggi nilai ujian.
-![alt text](image-2.png)
 
 #### 5. Kehadiran vs Nilai Ujian
 Korelasi positif terlihat antara tingkat kehadiran dan nilai ujian, menunjukkan bahwa siswa yang lebih sering hadir cenderung mendapat nilai lebih baik.
-![alt text](image-3.png)
+![image](https://github.com/user-attachments/assets/8bc2b25f-ec8a-41f3-aa28-c86cbb61bf1d)
+
 
 #### 6. Pendidikan Orang Tua vs Nilai Ujian
 Siswa dengan orang tua berpendidikan tinggi (misalnya S1/S2) cenderung memiliki nilai ujian yang lebih tinggi, meskipun terdapat variasi.
-![alt text](image-4.png)
+![image](https://github.com/user-attachments/assets/3a757bde-3f83-4218-9b82-02d3275103e2)
+
 
 #### 6. Distribusi Fitur Numerik
 - Berikut distibusi Fitur numerik pada data frame ini 
-![alt text](image-5.png)
+![image](https://github.com/user-attachments/assets/5bd75b40-adb4-4b3e-91fb-385725003fe4)
 
 
 #### 6. Distribusi Fitur Kategorikal
 Berikut distribusi fitur kategorikal
-![alt text](image-6.png)
+![image](https://github.com/user-attachments/assets/35da617c-ad57-44da-b78c-4e91c7f56966)
+
 
 
 #### 7 Heatmap Korelasi antar fitur 
-![alt text](image-7.png)
+![image](https://github.com/user-attachments/assets/2ef08716-ba1d-409f-ac6a-39309bc2b0c4)
+
 terlihat diatas, bahwa korelasi paling tinggi ada di studi time perharinya
 
 
@@ -163,14 +176,15 @@ Beberapa variabel penting yang mungkin berpengaruh signifikan terhadap nilai uji
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
 ### Memahami Struktur Data
   - Menggunakan fungsi df.info() | df.describe() untuk melihat ringkasan data dalam bentuk statistik dan distribusi awal
-  ![alt text](image-8.png)
-  ![alt text](image-9.png)
-  ![alt text](image-10.png)
+- ![image](https://github.com/user-attachments/assets/1a7452ef-fdae-443e-b143-2c77841ca323)
+- ![image](https://github.com/user-attachments/assets/881e6e05-bdf9-46aa-bc2b-e404ba986839)
+
 
 ### Menangani Missing Values
 - Kolom parental_education_level memiliki 91 nilai kosong.
 - Teknik yang diterapkan: imputasi dengan modus (mode) 
-![alt text](image-11.png)
+![image](https://github.com/user-attachments/assets/ef445d43-8a53-4e6a-8a84-4362f39d0a5c)
+
 ### Menghapus Kolom yang Tidak Digunakan
 - Kolom student_id dihapus karena tidak relevan dalam prediksi.
 
@@ -227,19 +241,22 @@ Tiga metrik utama yang digunakan untuk mengevaluasi performa model regresi adala
 ### 1. Mean Absolute Error (MAE)
 - Mengukur rata-rata kesalahan absolut antara nilai aktual dan prediksi.
 - Rumus:
-![alt text](image-14.png)
+![image](https://github.com/user-attachments/assets/93705c7f-69ca-46b1-a1cc-3390dd6d6998)
+
 - Semakin kecil nilainya, semakin baik model memprediksi.
 
 ### 2. Root Mean Squared Error (RMSE)
 - Mengukur akar dari rata-rata kuadrat kesalahan.
 - Lebih sensitif terhadap outlier dibanding MAE.
 - Rumus:
-  ![alt text](image-13.png)
+  ![image](https://github.com/user-attachments/assets/6bbacc20-60af-49f0-8095-addf2a201557)
+
 
 ### 3. R-squared (R²)
 - Menjelaskan seberapa besar variansi dari target bisa dijelaskan oleh fitur.
 - Rumus:
- ![alt text](image-15.png)
+ ![image](https://github.com/user-attachments/assets/9c291507-f639-4248-8b15-4923b47d1181)
+
  
 - Nilai mendekati 1 menunjukkan model sangat baik.
 
@@ -254,7 +271,8 @@ Setelah dilakukan pelatihan dan evaluasi menggunakan **Linear Regression** dan *
 | Linear Regression      | 4.19   | 5.15   | 0.897    |
 | Random Forest Regressor| 4.97   | 6.21   | 0.850    |
 
-![alt text](image-12.png)
+![image](https://github.com/user-attachments/assets/78d3e4fd-3942-490e-ac19-c4f0e315ebcc)
+
 
 ---
 
