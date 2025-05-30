@@ -288,7 +288,8 @@ Setelah dilakukan pelatihan dan evaluasi menggunakan **Linear Regression** dan *
 **---Ini adalah bagian akhir laporan---**
 
 ## CATATAN
-- LAPORAN INI SAYA UPLOAD DI GITHUB BERIKUT LINKNYA: https://github.com/dhezhen/submision_ml_predicitive_analisys/blob/master/format_laporan_submission_1.md 
+- LAPORAN INI SAYA UPLOAD DI GITHUB BERIKUT LINKNYA:
+- https://github.com/dhezhen/submision_ml_predicitive_analisys/blob/master/laporan_submission1.md 
 
 
 
