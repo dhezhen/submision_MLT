@@ -205,7 +205,9 @@ Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dil
 ### Regresi Linier
 
 - Linear Regression adalah algoritma regresi yang paling sederhana dan mudah diinterpretasikan. Model ini bekerja dengan mengasumsikan adanya hubungan linear antara fitur-fitur masukan dengan target output. Keunggulan utama Linear Regression adalah efisiensinya dalam komputasi dan kemudahannya dalam interpretasi hasil. Misalnya, koefisien dari setiap fitur dapat memberikan informasi langsung tentang pengaruh fitur tersebut terhadap nilai ujian.
-Namun, kelemahan utama dari Linear Regression adalah ketidakmampuannya dalam menangani hubungan non-linear dalam data. Model ini juga sangat sensitif terhadap outlier dan multikolinearitas antar fitur. Dalam konteks data ini, pola hubungan antara kebiasaan siswa dan nilai ujian tampaknya cukup kompleks dan tidak sepenuhnya linear, sehingga performa Linear Regression menjadi kurang optimal.
+  
+Namun, kelemahan utama dari Linear Regression adalah ketidakmampuannya dalam menangani hubungan non-linear dalam data. Model ini juga sangat sensitif terhadap outlier dan multikolinearitas antar fitur. Dalam konteks data ini, pola hubungan antara kebiasaan siswa dan nilai ujian tampaknya cukup kompleks dan tidak sepenuhnya linear, sehingga performa Linear Regression menjadi kurang optimal. 
+- Selanjutnya terdapat Parameter _fit_intercept=True_ pada model LinearRegression digunakan agar model secara otomatis menghitung nilai intersep (konstanta), sehingga garis regresi tidak dipaksa melalui titik nol dan dapat lebih akurat menyesuaikan pola data yang umumnya tidak berawal dari nol; oleh karena itu, parameter ini ditambahkan untuk meningkatkan akurasi prediksi model terhadap data nyata.
 
 ### Random Fores Regressor
 - Random Forest Regressor adalah algoritma ensemble berbasis decision tree yang mampu menangani hubungan non-linear dan interaksi antar fitur secara lebih baik. Model ini bekerja dengan membangun banyak pohon keputusan (trees) dan menggabungkan prediksinya untuk menghasilkan output yang lebih stabil dan akurat. Random Forest juga lebih tahan terhadap overfitting dibandingkan decision tree tunggal karena melakukan averaging dari banyak pohon.
@@ -217,7 +219,9 @@ Untuk meningkatkan performa model Random Forest Regressor, dilakukan proses hype
 n_estimators: Merupakan jumlah pohon keputusan (decision trees) yang akan dibuat dalam Random Forest. Semakin banyak pohon, biasanya model akan lebih stabil, tetapi juga membutuhkan waktu komputasi yang lebih lama. Dalam tuning ini, diuji tiga nilai: 50, 100, dan 150.
 max_depth: Menentukan kedalaman maksimum dari setiap pohon dalam hutan. Kedalaman yang terlalu rendah dapat menyebabkan model underfitting, sementara kedalaman yang terlalu tinggi bisa menyebabkan overfitting. Nilai yang diuji dalam tuning ini adalah 5, 10, dan 20.
 Kombinasi dari kedua parameter tersebut diuji menggunakan GridSearchCV, yaitu metode pencarian yang secara sistematis mencoba semua kemungkinan kombinasi parameter yang telah ditentukan. Proses tuning ini juga menggunakan 5-fold cross-validation, di mana data latih dibagi menjadi lima bagian, dan model dilatih dan divalidasi sebanyak lima kali secara bergiliran. Hal ini dilakukan untuk memastikan bahwa hasil evaluasi model tidak tergantung pada satu subset data saja.
-Metode evaluasi yang digunakan dalam proses ini adalah Mean Squared Error (MSE), namun dalam implementasi GridSearchCV, metrik ini dikalikan dengan -1 (neg_mean_squared_error) karena scikit-learn mengharuskan nilai skor evaluasi semakin besar semakin baik.
+
+ - Hasil terbaik dari penerapan algoritma grid seacrh pada pada parameter akhir _RandomForestRegressor(max_depth=20, n_estimators=150, random_state=42)_ bertujuan untuk mengoptimalkan kinerja model dengan membatasi kedalaman maksimum setiap pohon keputusan hingga 20, sehingga mencegah overfitting; meningkatkan jumlah pohon dalam hutan menjadi 150 agar prediksi lebih stabil dan akurat; serta menggunakan random_state=42 untuk memastikan hasil yang konsisten dan dapat direproduksi. Kombinasi parameter ini menghasilkan model yang lebih seimbang antara kompleksitas dan generalisasi terhadap data, sehingga memberikan prediksi yang lebih andal.
+ - Metode evaluasi yang digunakan dalam proses ini adalah Mean Squared Error (MSE), namun dalam implementasi GridSearchCV, metrik ini dikalikan dengan -1 (neg_mean_squared_error) karena scikit-learn mengharuskan nilai skor evaluasi semakin besar semakin baik.
 Setelah semua kombinasi parameter diuji, GridSearchCV akan memilih model dengan kombinasi parameter terbaik berdasarkan nilai MSE terkecil. Model ini kemudian digunakan sebagai model final untuk melakukan prediksi terhadap data uji.
 Dengan menggunakan teknik ini, model Random Forest Regressor yang dihasilkan menjadi lebih optimal, memiliki generalisasi yang lebih baik terhadap data baru, dan mengurangi risiko overfitting atau underfitting.
 
@@ -290,10 +294,4 @@ Setelah dilakukan pelatihan dan evaluasi menggunakan **Linear Regression** dan *
 ## CATATAN
 - LAPORAN INI SAYA UPLOAD DI GITHUB BERIKUT LINKNYA:
 - https://github.com/dhezhen/submision_ml_predicitive_analisys/blob/master/laporan_submission1.md 
-
-
-
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
 
