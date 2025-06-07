@@ -92,8 +92,6 @@ Konten dengan type Drama, komedi dan action menempati 3 besar konten yang di pro
 ![image](https://github.com/user-attachments/assets/e320385d-b7d1-4811-939d-bda0bac9b38d)
 Dari chart diatas kita dapat melihat distribsusi konten yang di sajikan di platform amazon dalam 20 tahun terakhir meningkat terus menerus setiap tahunnya, dalam 3 tahun terakhir produksi konten movie memperlihatkan peningkatan  yang sangat siginifikan.  
 
-
-
 ## Data Preparation
 Pada tahapan ini saya melakukan beberapa metode data preprocessing diantarannya adalah sebagai berikut: 
 ### Data Cleaning 
@@ -125,10 +123,6 @@ Berikut hasil dari perlakuan data diatas:
 ![image](https://github.com/user-attachments/assets/bb9f169f-6ef0-43c1-9998-687028e78218)
 bisa kita lihat, kita telah menangani missing value, dan semua data terisi
 
-### Menhgilangkan string 's' pada kolom show_id
-tujuan dari pengilangan ini adalah untuk meningkatkan keterbacaan id dari yang tadinya s1 menjadi 1. berikut hasilnya 
-![image](https://github.com/user-attachments/assets/ae1b46d7-00d1-4ec1-9a7d-82ac3522bf58)
-
 ### Menyeragamkan value rating
 ![image](https://github.com/user-attachments/assets/d94f9537-7813-43c3-abae-ec09e9393bb9)
 kita bisa liat nilai dalam rating terdapat nilai  yang sama, ini juga terllihat dalam grafik rating diatas. sebagai contoh rating 16 dan AGES_16_ itu adalah sama. maka saya akan menyeragamkan itu.
@@ -139,6 +133,14 @@ Kita bisa lihat hasil penyeragaman rating dalam kotak merah diatas.
 dalam kasus rekomender system ini kita perlu mengeliminasi kolom-kolom yang tidak diperlukan yaitu kolom show_id, release_yaear dan duration sehingga hasil akhir sebelum modeling data frame yang akan dioleh adalah sebagai berikut: 
 ![image](https://github.com/user-attachments/assets/cbff9f62-e25c-478f-926e-a20438256a15)
 
+### Pembuatan fitur gabungan (combined_features)
+Proses ini merupakan strategi dalam sistem rekomendasi berbasis konten (Content-Based Filtering). Tujuan dari penggabungan ini adalah untuk membentuk representasi deskriptif dari setiap item (film atau acara TV) dalam satu string yang bisa diproses pada tahapan selajutnya yaitu TF-IDF atau CountVectorizer. dalam kasus ini fitur yang akan digabungkan adalah _director, cast, listed_in, description_ dan _title_ yang akan di simpan dalam ftur baru  yaitu _combined_features_. Berikut hasil penggabungan fitur tersebut: 
+![image](https://github.com/user-attachments/assets/cca40324-729d-45e5-9308-09eaad8b429b)
+
+
+### TF-IDF vectorization
+Tahap ini adalah tahap terakhir dalam proses data preparation dimana TF-ID sendiri adalah kependekan dari _Term Frequency-Inverse Document Frequency_ yang merupakan  metode statistik yang digunakan untuk mengevaluasi seberapa penting sebuah kata dalam dokumen relatif terhadap kumpulan dokumen. TF mengukur seberapa sering sebuah kata muncul dalam dokumen, sedangkan inverse dokumen adalah mengukur seberapa jarang sebuah kata dalam sebuah dokumen.
+Dalam kasus ini saya akan melakukan proses TF-IDF ke dalam fitur gabungan baru yaitu _conmbined_features_.  
 
 
 
@@ -147,7 +149,7 @@ dalam kasus rekomender system ini kita perlu mengeliminasi kolom-kolom yang tida
 
 pada tahapan modeling, saya melakukan 2 jenis teknik modelling: 
 
-1. TF-IDF + Cosine Similiriarity
+### 1. Cosine Similiriarity
 
 **Cosine Similarity** adalah ukuran kesamaan antara dua vektor dalam ruang fitur berdimensi tinggi yang dihitung berdasarkan **sudut kosinus** di antara keduanya. Dalam konteks **sistem rekomendasi berbasis konten (Content-Based Filtering)**, cosine similarity digunakan untuk mengukur sejauh mana dua item (misalnya, film atau acara TV) serupa berdasarkan atribut konten yang telah direpresentasikan sebagai vektor teks (misalnya melalui TF-IDF).
 Semakin kecil sudut antara dua vektor, semakin besar nilai cosine similarity-nya (mendekati 1), yang berarti semakin mirip kedua item tersebut.
@@ -159,7 +161,7 @@ Nilai hasil cosine similarity berkisar antara:
 - **0** = tidak mirip sama sekali (sudut 90°)
 - **1** = identik (sudut 0°)
 
-## Penerapan dalam Sistem Rekomendasi
+#### Penerapan dalam Sistem Rekomendasi
 Dalam sistem rekomendasi:
 - Setiap item (misalnya film) direpresentasikan sebagai vektor (biasanya menggunakan TF-IDF).
 - Kemudian cosine similarity digunakan untuk menghitung seberapa mirip satu item dengan item lain.
@@ -174,7 +176,7 @@ hasilnya:
 
 
 
-1. K-Nearest Neighbor (KNN) 
+### 2. K-Nearest Neighbor (KNN) 
 K-Nearest Neighbor (KNN) merupakan salah satu algoritma yang paling sederhana dalam proses klasifikasi data. Prinsip kerjanya mudah dipahami, yakni dengan menentukan kelompok suatu data berdasarkan kedekatannya dengan data lain di sekitarnya. Dalam penerapannya, algoritma ini mempertimbangkan sejumlah data tetangga terdekat—yang jumlahnya ditentukan oleh nilai parameter K—untuk memprediksi kelas atau label data yang belum diketahui. Jika K=1, maka hanya satu data terdekat yang dijadikan acuan untuk menentukan kelas dari data tersebut.
 Berikut Rumus K-Nearest Neighbor :
 
@@ -203,76 +205,27 @@ Berikut hasil dari model rekomendasi menggunakan model KNN
 | **Ketergantungan pada Data** | Bergantung pada fitur konten                                                       | Bergantung pada struktur tetangga dalam ruang fitur                               |
 
 
-
-
 ## Evaluation
 
-Metrik evaluasi digunakan untuk menilai seberapa baik performa suatu model. Dalam konteks ini, beberapa metrik evaluasi yang umum digunakan untuk mengukur kinerja model antara lain cosine similiarity dan Calinski Harabasz Score. Metrik-metrik ini bertujuan untuk memberikan gambaran tentang seberapa baik model bekerja dalam melakukan tugas tertentu, seperti klasifikasi atau klastering
+Metrik evaluasi yang digunakan pada konteks rekomender sistem ini adalah dengan menggunakan precision, Precision adalah rasio antara jumlah item relevan yang berhasil diprediksi terhadap jumlah total item yang diprediksi sebagai relevan. dimana 
+rumus precision adalah sebagai berikut: 
+![image](https://github.com/user-attachments/assets/860794d4-ddce-4e9d-9b4e-53a3eb17145e)
 
+Keterangan:
+- **True Positive (TP):** Item yang relevan dan berhasil direkomendasikan/diprediksi dengan benar
+- **False Positive (FP):** Item yang tidak relevan tapi tetap dimasukkan dalam hasil rekomendasi
 
-1. Calinski-Harabasz Score
-   Calinski-Harabasz Score (juga dikenal sebagai Variance Ratio Criterion) adalah metrik yang digunakan untuk mengevaluasi kualitas hasil clustering, khususnya pada algoritma unsupervised learning seperti K-Means. Skor ini mengukur rasio antara varians antar-klaster (antara cluster centroid) terhadap varians dalam-klaster (dalam cluster masing-masing).
+Berikut hasil dari prediksi knn dan cosine similiarity
+![image](https://github.com/user-attachments/assets/12bd4aed-4f79-4d31-9137-e045a49c2dd4)
+-  Hasil dari rekomendendari dari model knn tersebut terdapat nilai True Positif (TP) =4 dan False Posisitif (FP) = 1, sehingga kita dapat menghitung nilai presisi sebagai berikut:
 
-## 🧮 Rumus
+Precisision = 4/(4+1) = 4/5 = 0.8 = 80%
 
-
-![image](https://github.com/user-attachments/assets/b5f34570-961b-4835-b8df-1d4ae0d98e32)
-
-
-**Keterangan:**
--B_k: jumlah varians antar-klaster (between-cluster dispersion)
--Tr(W_k) ): jumlah varians dalam-klaster (within-cluster dispersion)
-- n: jumlah total sampel
-- k: jumlah klaster
-
-## 📌 Interpretasi
-- Semakin **besar** nilai Calinski-Harabasz Score, semakin **baik** hasil clustering.
-- Skor tinggi menunjukkan klaster:
-  - memiliki **perbedaan yang jelas antar klaster**, dan
-  - masing-masing klaster memiliki **variansi internal yang kecil**.
-
-Berikut hasil dari calinski-score knn
-
-![image](https://github.com/user-attachments/assets/16ea2335-2ba5-4f87-913c-835eb55ca881)
-
-### Interpretasi:
-1. Skor tertinggi diperoleh saat k = 2 dengan nilai 40.56, yang berarti:
-- Ketika data dikelompokkan menjadi 2 klaster, hasil clustering memberikan pemisahan antar klaster yang paling jelas dan kompak di dalam masing-masing klaster dibandingkan dengan jumlah klaster lainnya.
-- Ini mengindikasikan bahwa model clustering paling optimal (berdasarkan CH Score) adalah ketika data dibagi menjadi 2 klaster.
-
-2. Seiring bertambahnya jumlah klaster (k > 2), skor menurun secara signifikan, yang menunjukkan:
-- Klaster menjadi kurang terpisah dan/atau lebih tersebar, menandakan penurunan kualitas clustering.
-- Meskipun pada k=6 skor sedikit naik dibanding k=5, nilainya tetap jauh lebih rendah dari k=2, sehingga tidak optimal secara keseluruhan.
-
-2. Cosine Similiarity
-**Cosine Similarity** adalah ukuran kesamaan antara dua vektor dalam ruang vektor berdasarkan **sudut kosinus** di antara mereka. Dalam konteks **sistem rekomendasi**, Cosine Similarity digunakan untuk mengukur **kesamaan antara dua item atau dua pengguna** berdasarkan fitur mereka (misalnya: genre, deskripsi, aktor, dan sebagainya).
-
-rumus cosine similiarity: 
-
-$$
-\text{Cosine Similarity}(A, B) = \cos(\theta) = \frac{A \cdot B}{\|A\| \|B\|}
-$$
-
-**Keterangan:**
-- A · B : hasil perkalian dot product antara dua vektor A dan B  
-- ||A|| : norma (panjang) dari vektor A  
-- ||B|| : norma (panjang) dari vektor B  
-- Hasil dari Cosine Similarity berada dalam rentang [0, 1] untuk vektor non-negatif
+Berarti nilai dari presisi dari model KKN tersebut adalah 80%
 
 
 
 
-Hasil dari Cosine Similiarity 
-
-![image](https://github.com/user-attachments/assets/a1ade417-10a6-4c24-880a-4adf2b59648d)
-
-visualisasi top N 110
-![image](https://github.com/user-attachments/assets/04214d10-bce0-4d16-94fa-c965f26edca3)
-hasil dari cosine similiaritiy menunnjukan film dengan judul "Maradona: Blessed Dream" dengan "Maradona - the hand of god" memiliki nilai cosine similiarity sebesar 0.175 artiay dari top 10 filem judul tersebut ada pada urutan nomor 1 artinya paling mirip.
-
-heatmap ton N 10 
-
-![image](https://github.com/user-attachments/assets/942bfd57-4c8d-4729-9025-775e61d1c503)
 
 #Referensi
 1.  Bawden, D., & Robinson, L. (2009). The dark side of information: Overload, anxiety and other paradoxes and pathologies. Journal of Information Science, 35(2), 180–191. https://doi.org/10.1177/0165551508095781
