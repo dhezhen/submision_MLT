@@ -139,11 +139,12 @@ Proses ini merupakan strategi dalam sistem rekomendasi berbasis konten (Content-
 
 
 ### TF-IDF vectorization
-Tahap ini adalah tahap terakhir dalam proses data preparation dimana TF-ID sendiri adalah kependekan dari _Term Frequency-Inverse Document Frequency_ yang merupakan  metode statistik yang digunakan untuk mengevaluasi seberapa penting sebuah kata dalam dokumen relatif terhadap kumpulan dokumen. TF mengukur seberapa sering sebuah kata muncul dalam dokumen, sedangkan inverse dokumen adalah mengukur seberapa jarang sebuah kata dalam sebuah dokumen.
+Tahap ini adalah dalam proses data preparation dimana TF-ID sendiri adalah kependekan dari _Term Frequency-Inverse Document Frequency_ yang merupakan  metode statistik yang digunakan untuk mengevaluasi seberapa penting sebuah kata dalam dokumen relatif terhadap kumpulan dokumen. TF mengukur seberapa sering sebuah kata muncul dalam dokumen, sedangkan inverse dokumen adalah mengukur seberapa jarang sebuah kata dalam sebuah dokumen.
 Dalam kasus ini saya akan melakukan proses TF-IDF ke dalam fitur gabungan baru yaitu _conmbined_features_.  
 
 
-
+### CountVectorizer
+Pada tahap ini, kita menggunakan _CountVectorizer_ untuk mengubah teks pada kolom _combined_features _menjadi bentuk vektor numerik. Kita juga menghilangkan kata-kata umum dalam bahasa Inggris _(stop words)_ agar hasil lebih fokus pada kata-kata penting yang merepresentasikan konten film.
 
 ## Modeling
 
@@ -207,6 +208,28 @@ Berikut hasil dari model rekomendasi menggunakan model KNN
 
 ## Evaluation
 
+### 1. Content Based Filterig dengan Cosine Similarity
+Cosine similarity menunjukkan kemiripan arah antara dua vektor teks, bukan panjangnya. Nilainya berada di antara -1 hingga 1: 
+Rumus Cosine Similarity
+
+![image](https://github.com/user-attachments/assets/79f0d3d0-0f2e-4a20-baf5-bbb64bd26375)
+
+
+### Nilai Cosine Similarity:
+
+- `1` : Sangat mirip (arah vektor sama)
+- `0` : Tidak mirip sama sekali (arah tegak lurus)
+- `-1` : Berlawanan arah (jarang terjadi dalam konteks teks)
+
+Beriut hasil dari penghitungan nilai kemiripan dengan cosine similrarity
+![image](https://github.com/user-attachments/assets/8384eba9-c662-4134-abe9-b24c7979e58e)
+Berdasarkan hasil perhitungn diatas kita dapat melihat nilai dari setiap rekomendasi yang diberikan di susun berdasarkan nilai dari score similariti nya, dimana triassic Hunt,virus, The Z Virus, dan  'Virus' mempunyai score kemiripan tinggi.
+berikut score similarity untuk setiap rekoendasinya
+![image](https://github.com/user-attachments/assets/de902b65-a881-4a82-9268-e47b4b198587)
+
+
+
+### 2. Evaluasi Model KNN dengan Precisiion
 Metrik evaluasi yang digunakan pada konteks rekomender sistem ini adalah dengan menggunakan precision, Precision adalah rasio antara jumlah item relevan yang berhasil diprediksi terhadap jumlah total item yang diprediksi sebagai relevan. dimana 
 rumus precision adalah sebagai berikut: 
 ![image](https://github.com/user-attachments/assets/860794d4-ddce-4e9d-9b4e-53a3eb17145e)
@@ -215,9 +238,13 @@ Keterangan:
 - **True Positive (TP):** Item yang relevan dan berhasil direkomendasikan/diprediksi dengan benar
 - **False Positive (FP):** Item yang tidak relevan tapi tetap dimasukkan dalam hasil rekomendasi
 
-Berikut hasil dari prediksi knn dan cosine similiarity
+Berikut hasil evaluasi dari model  knn
 ![image](https://github.com/user-attachments/assets/12bd4aed-4f79-4d31-9137-e045a49c2dd4)
--  Hasil dari rekomendendari dari model knn tersebut terdapat nilai True Positif (TP) =4 dan False Posisitif (FP) = 1, sehingga kita dapat menghitung nilai presisi sebagai berikut:
+
+
+![image](https://github.com/user-attachments/assets/5ef9d32e-ca97-43fd-b8d8-3d0bb344f022)
+
+-  Hasil dari rekomendasu dari dari model knn tersebut terdapat nilai True Positif (TP) =4 dan False Posisitif (FP) = 1, sehingga kita dapat menghitung nilai presisi sebagai berikut:
 
 Precisision = 4/(4+1) = 4/5 = 0.8 = 80%
 
