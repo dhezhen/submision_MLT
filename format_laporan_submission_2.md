@@ -208,24 +208,10 @@ Berikut hasil dari model rekomendasi menggunakan model KNN
 
 ## Evaluation
 
-### 1. Content Based Filterig dengan Cosine Similarity
-Cosine similarity menunjukkan kemiripan arah antara dua vektor teks, bukan panjangnya. Nilainya berada di antara -1 hingga 1: 
-Rumus Cosine Similarity
-
-![image](https://github.com/user-attachments/assets/79f0d3d0-0f2e-4a20-baf5-bbb64bd26375)
-
-
-### Nilai Cosine Similarity:
-
-- `1` : Sangat mirip (arah vektor sama)
-- `0` : Tidak mirip sama sekali (arah tegak lurus)
-- `-1` : Berlawanan arah (jarang terjadi dalam konteks teks)
-
-Beriut hasil dari penghitungan nilai kemiripan dengan cosine similrarity
-![image](https://github.com/user-attachments/assets/8384eba9-c662-4134-abe9-b24c7979e58e)
-Berdasarkan hasil perhitungn diatas kita dapat melihat nilai dari setiap rekomendasi yang diberikan di susun berdasarkan nilai dari score similariti nya, dimana triassic Hunt,virus, The Z Virus, dan  'Virus' mempunyai score kemiripan tinggi.
-berikut score similarity untuk setiap rekoendasinya
-![image](https://github.com/user-attachments/assets/de902b65-a881-4a82-9268-e47b4b198587)
+### 1. Content Based Filterig dengan Presisi
+Hasil evaluasi model _content Base Filtering_ dengan presisi dibawah ini menunjukan bawa tingkan presisi dan relevansi judul film itu mempunyai tingkat presisi yang cukup tinggi, berikut hasiln evalusinya: 
+![image](https://github.com/user-attachments/assets/ea30ccf0-35e7-4fb7-9002-51ef5e6eaf93)
+Berdasarkan hasil perhitungan diatas kita dapat melihat tinkat presisinya adalah 0.8(80%) artinya 4 dari 5 rekomendasi relevan dengan judul film
 
 
 
