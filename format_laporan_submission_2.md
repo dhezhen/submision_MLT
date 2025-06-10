@@ -168,13 +168,14 @@ Dalam sistem rekomendasi:
 - Kemudian cosine similarity digunakan untuk menghitung seberapa mirip satu item dengan item lain.
 - Item-item yang memiliki nilai similarity tertinggi akan direkomendasikan kepada pengguna.
 
-berikut hasil penerapan model dengan teknik cosine similarity
+berikut hasil penerapan model Content Based Filtering dengan cosine similirity:
 ```python
-content_based_recommendations("Maradona: Blessed Dream")
+content_based_recommendations("Zoombies")
 ```
 hasilnya: 
-![image](https://github.com/user-attachments/assets/7c6c0f84-4dbf-43bd-9af1-034dfd99a1ba)
+![image](https://github.com/user-attachments/assets/0ca425b0-ea5f-44d5-8b6d-b84a84aaecbf)
 
+Hasilnya 4 dari 5 film yang di rekomendasikan relevan denagan judul yang diajukan.
 
 
 ### 2. K-Nearest Neighbor (KNN) 
@@ -210,7 +211,10 @@ Berikut hasil dari model rekomendasi menggunakan model KNN
 
 ### 1. Content Based Filterig dengan Presisi
 Hasil evaluasi model _content Base Filtering_ dengan presisi dibawah ini menunjukan bawa tingkan presisi dan relevansi judul film itu mempunyai tingkat presisi yang cukup tinggi, berikut hasiln evalusinya: 
-![image](https://github.com/user-attachments/assets/ea30ccf0-35e7-4fb7-9002-51ef5e6eaf93)
+![image](https://github.com/user-attachments/assets/0a71432d-162b-481c-9241-35c634e2a652)
+
+![image](https://github.com/user-attachments/assets/81a05e56-e9bc-4a06-a199-825e45d5a76c)
+
 Berdasarkan hasil perhitungan diatas kita dapat melihat tinkat presisinya adalah 0.8(80%) artinya 4 dari 5 rekomendasi relevan dengan judul film
 
 
